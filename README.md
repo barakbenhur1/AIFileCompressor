@@ -1,112 +1,69 @@
+# AIFileCompressor
 
-# 📦 AIFileCompressor
+A PyQt5 desktop app for per‑file lossless compression by training and updating a shared ML model.
 
-An experimental **AI-powered file compression and decompression tool** using a Transformer-based model.  
-Trains a neural network to reconstruct the original file from a compressed representation, while ensuring **lossless recovery**.  
-Built with Python, PyTorch, and PyQt6 for a user-friendly interface.
+## Features
 
----
+- **Compress** any file into `${name}.aic`  
+- **Decompress** a `.aic` back to the original file  
+- **Shared model** (`model/shared_model.pt`) is pulled/pushed to GitHub  
+- Drag‑and‑drop inputs + real‑time logs  
 
-## 🚀 Features
-✅ Compress any file into `.aip`  
-✅ Store original extension in the file header  
-✅ Prevent overwriting by appending `-1`, `-2`, … if needed  
-✅ Decompress `.aip` back to original file with correct extension  
-✅ PyQt6 GUI with drag-and-browse, logs, and clear feedback  
-✅ Transformer-based placeholder AI model that trains on the fly  
+## Setup
 
----
+1. **Clone the repo**  
+   ```bash
+   git clone https://github.com/barakbenhur1/AIFileCompressor.git
+   cd AIFileCompressor
+   ```
 
-## 📁 Installation
+2. **Create & activate a virtual environment**  
+   ```bash
+   python3.10 -m venv venv
+   source venv/bin/activate     # macOS/Linux
+   venv\Scripts\activate.bat  # Windows cmd
+   ```
 
-### 1️⃣ Clone or Download
-Download the zipped project or clone:
-```bash
-git clone <your-repo-url>
-cd AIFileCompressor
-```
+3. **Install dependencies**  
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Or just extract the provided `.zip` file.
+4. **Configure GitHub PAT**  
+   ```bash
+   export GITHUB_TOKEN=<your_personal_access_token>      # macOS/Linux
+   set GITHUB_TOKEN=<your_personal_access_token>         # Windows cmd
+   $env:GITHUB_TOKEN="<your_personal_access_token>"      # PowerShell
+   ```
 
----
+5. **Run the app**  
+   ```bash
+   python scripts/gui.py
+   ```
 
-### 2️⃣ Install dependencies
-We recommend a virtualenv:
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+## Project Layout
 
-Dependencies:
-- PyTorch
-- PyQt6
-- numpy
-- transformers
-
----
-
-## 🖥️ Usage
-
-### Run the GUI
-```bash
-python gui.py
-```
-
-### Compression
-- Switch to the **Compress** tab.
-- Select a file (any type) using the *Browse* button or type path manually.
-- Click **Compress**.
-- Output file: `<file>.aip` in the same folder (or `<file>-1.aip`, etc. if already exists).
-
-### Decompression
-- Switch to the **Decompress** tab.
-- Select a `.aip` file.
-- Click **Decompress**.
-- Output file: `<file>.<original_extension>` in the same folder (or `<file>-1.ext`, etc. if already exists).
-
----
-
-## 📂 Example
-
-| Original File   | Compressed File  | Decompressed File  |
-|-----------------|------------------|--------------------|
-| `image.png`     | `image.aip`      | `image.png`        |
-| `p.exe`         | `p.aip`          | `p.exe`            |
-| `image.aip` + existing `image.png` | `image.aip`        | `image-1.png` |
-
----
-
-## ⚙️ Project Structure
 ```
 AIFileCompressor/
-├── gui.py
-├── compressor.py
-├── decompressor.py
-├── trainer.py
-├── ai_model.py
-├── utils.py
+├── scripts/
+│   ├── git_utils.py
+│   ├── compressor.py
+│   └── gui.py
+├── model/                  # may start empty
+├── venv/                   # virtual environment
 ├── requirements.txt
-├── models/
+├── README.md
+├── .gitignore
 ```
 
----
+## Example & Test Cases
 
-## 💡 Notes
-- This is a proof of concept and uses a placeholder Transformer model. The AI does not yet achieve true compression ratios comparable to traditional methods.
-- Training is done on-the-fly per file. Future versions can implement pre-trained models and smarter codecs.
-- Works on CPU but can be extended to use GPU for faster training.
+- **Text file**  
+  - Compress: `test.txt` → `test.aic`  
+  - Decompress: `test.aic` → `test.txt`  
 
----
+- **Image file**  
+  - Compress: `test.gif` → `test.aic`  
+  - Decompress: `test.aic` → `test.gif`  
 
-## 📈 Roadmap (suggestions)
-- Add drag-and-drop support.
-- Add progress bar and estimated time.
-- Improve compression ratio with entropy coding.
-- Persist trained models for reuse.
-- Implement true AI-based lossless coding schemes.
-
----
-
-### 👨‍💻 Author
-Built by [Barak] — feel free to extend & contribute!
+Verify that the decompressed content matches the original exactly.

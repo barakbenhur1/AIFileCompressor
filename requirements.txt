@@ -1,4 +1,4 @@
-torch
-transformers
-PyQt6
-numpy
+PyQt5>=5.15.7
+torch>=1.13.0
+GitPython>=3.1.31
+requests>=2.28.0
